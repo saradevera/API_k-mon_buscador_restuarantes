@@ -1,13 +1,15 @@
 from flask import Flask, request, jsonify, render_template
-import os
+# import os
 import sqlite3
 import pandas as pd
-from sklearn.metrics.pairwise import linear_kernel
+import numpy as np
 from functions import *
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics.pairwise import linear_kernel
+from os import environ
 
 
-os.chdir(os.path.dirname(__file__))
+# os.chdir(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -99,4 +101,4 @@ def RecomendacionDependiente():
     return str(recomendacion)
 
 if __name__ == '__main__':
-    app.run()
+  app.run(debug = True, host = '0.0.0.0', port=environ.get("PORT", 5000))
