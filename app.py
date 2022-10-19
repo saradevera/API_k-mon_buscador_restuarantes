@@ -4,10 +4,8 @@ import sqlite3
 import pandas as pd
 import numpy as np
 from functions import *
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics.pairwise import linear_kernel
-from os import environ
-
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.metrics.pairwise import linear_kernel
 
 # os.chdir(os.path.dirname(__file__))
 
@@ -101,4 +99,4 @@ def hello():
 #     return str(recomendacion)
 
 if __name__ == '__main__':
-  app.run(debug = True, host = '0.0.0.0', port=environ.get("PORT", 5000))
+  app.run(threaded=True, port=5000)
