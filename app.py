@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 # import os
-import sqlite3
-import pandas as pd
-import numpy as np
-from functions import *
+# import sqlite3
+# import pandas as pd
+# import numpy as np
+# from functions import *
 # from sklearn.preprocessing import StandardScaler
 # from sklearn.metrics.pairwise import linear_kernel
 
