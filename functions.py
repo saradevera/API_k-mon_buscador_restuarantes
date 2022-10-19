@@ -166,5 +166,7 @@ def get_recommendations(place_name, index, data, cosine_sim):
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:10]
     place_index = [i[0] for i in sim_scores]
+
+    recomendacion = data['place_name'].iloc[place_index]
     
-    return data['place_name'].iloc[place_index]
+    return recomendacion

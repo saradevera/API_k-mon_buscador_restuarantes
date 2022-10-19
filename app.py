@@ -101,8 +101,8 @@ def RecomendacionDependiente():
 
     recomendacion.to_json(orient = 'index')
 
-    # return jsonify(recomendacion)
-    return str(recomendacion)
+    return jsonify(recomendacion)
+    # return str(recomendacion)
 
 
 if __name__ == '__main__':
