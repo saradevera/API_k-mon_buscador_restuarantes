@@ -61,7 +61,7 @@ def RecomendacionDependiente():
     # CREAMOS EL COMPARATIVO DE DATOS Y EL INDICE QUE SE CONSULTARÁ
     # GENERAMOS LA SIMILITUD COSENO Y SE ORDENA SEGÚN PARECIDOS
     recomendaciones = get_recommendations(ID, data_scalado)
-    return 1
+    return recomendaciones
     # return str(recomendacion)
 
 
