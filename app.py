@@ -12,30 +12,29 @@ from sklearn.metrics.pairwise import linear_kernel
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-
-# NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
-conexion = sqlite3.connect("../Data/DatosFinaleDefinitivos5.6UltraAbsolutisimoSi.sql")
-cursor = conexion.cursor()
-
-columnas = []
-for x in cursor.execute("select * from negocios").description:
-    columnas.append(x[0])
-
-data = pd.DataFrame(cursor.execute("select * from negocios").fetchall(), columns = columnas)
-
-cursor.close()
-
-# unifica_columnas(data)
-info_from_type(data)
-info_from_description(data)
-new_columns(data)
-columnas_sumatorio(data)
-columnas_scoring(data)
-
-
 @app.route("/", methods=['GET'])
 def hello():
     return render_template('hola.html')
+
+# # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
+# conexion = sqlite3.connect("../Data/DatosFinaleDefinitivos5.6UltraAbsolutisimoSi.sql")
+# cursor = conexion.cursor()
+
+# columnas = []
+# for x in cursor.execute("select * from negocios").description:
+#     columnas.append(x[0])
+
+# data = pd.DataFrame(cursor.execute("select * from negocios").fetchall(), columns = columnas)
+
+# cursor.close()
+
+# # unifica_columnas(data)
+# info_from_type(data)
+# info_from_description(data)
+# new_columns(data)
+# columnas_sumatorio(data)
+# columnas_scoring(data)
+
 
 # @ PRIMER ENDPOINT
 @app.route("/RecomendacionPorPreferencias", methods = ['GET'])
