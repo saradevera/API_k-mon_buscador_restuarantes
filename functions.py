@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import pymysql
-
+from sklearn.metrics.pairwise import linear_kernel
 
 def conn_db():
     # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
@@ -149,16 +149,11 @@ def columnas_scoring(data):
     return data
 
 
-def get_recommendations(place_name, index, data, cosine_sim):
-    idx = index[place_name]
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:10]
-    place_index = [i[0] for i in sim_scores]
-
-    recomendacion = data['place_name'].iloc[place_index]
-    
-    return recomendacion
+def get_recommendations(data, ID):
+    CosineSim = linear_kernel([data[ID]], data)
+    SortCoSim = sorted(list(enumerate(CosineSim[0])), key = lambda x: x[1], reverse = True)
+    Recomendacion = [x[0] for x in SortCoSim]
+    return Recomendacion[:10]
 
 def preferencias(ListNum, data):
     cols = ["TOTAL_vegano", "TOTAL_vegetariano", "TOTAL_sostenible", "TOTAL_de_temporada", "TOTAL_orgánico", "TOTAL_saludable", "TOTAL_fresco", "TOTAL_artesano", "TOTAL_cero_basura", "TOTAL_de_proximidad"]
