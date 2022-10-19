@@ -1,30 +1,20 @@
-# from difflib import SequenceMatcher
 import pandas as pd
 import numpy as np
+import pymysql
 
 
-# def unifica_columnas(data):
-# # UNIFICAMOS COLUMNAS CON PLURALES O GÉNEROS DISTINTOS
-#     data_dict = {"nombre_data1":[],"nombre_data2":[],"ratio":[]}
-#     for x in data.iloc[::,18:].columns:
-#         for y in data.iloc[::,18:].columns:
-#             ratio = SequenceMatcher(None, y, x).ratio() 
-#             data_dict["nombre_data1"].append(x)
-#             data_dict["nombre_data2"].append(y)
-#             data_dict["ratio"].append(ratio)
+def sql_query(query,cursor):
 
-#     data_ratio = pd.DataFrame(data_dict)
-#     resumen = data_ratio[(data_ratio['ratio']>0.84)&(data_ratio['ratio']<1)].sort_values(by='ratio', ascending=False).head(500)
+    # Ejecuta la query
+    cursor.execute(query)
 
+    # Almacena los datos de la query 
+    ans = cursor.fetchall()
 
-#     for x in range(len(resumen)):
-#         try:
-#             data[resumen.iloc[x]["nombre_data1"]] = data[resumen.iloc[x]["nombre_data1"]] + data[resumen.iloc[x]["nombre_data2"]]
-#             data.drop(columns = resumen.iloc[x]["nombre_data2"], inplace=True)
-#         except:
-#             continue
-    
-#     return data
+    # Obtenemos los nombres de las columnas de la tabla
+    names = [description[0] for description in cursor.description]
+
+    return pd.DataFrame(ans,columns=names)
 
 
 def info_from_type(data):
@@ -160,4 +150,5 @@ def get_recommendations(place_name, index, data, cosine_sim):
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:10]
     place_index = [i[0] for i in sim_scores]
+    
     return data['place_name'].iloc[place_index]
