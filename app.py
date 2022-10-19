@@ -99,10 +99,10 @@ def RecomendacionDependiente():
     place_name = str(data.iloc[ID]['place_name'])
     recomendacion = get_recommendations(place_name, index, data, cosine_sim)
 
-    # recomendacion.to_json(orient = 'index')
+    recomendacion.to_json(orient = 'index')
 
-    return jsonify(recomendacion)
-    # return str(recomendacion)
+    # return jsonify(recomendacion)
+    return str(recomendacion)
 
 
 if __name__ == '__main__':
