@@ -3,15 +3,36 @@ import numpy as np
 import pymysql
 
 
+def conn_db():
+    # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
+    username = "admin"
+    password = "12345678"
+    host = "database-1.cjhgutfjw0tz.us-east-1.rds.amazonaws.com"
+    port = 3306
+
+    db = pymysql.connect(host = host,
+                      user = username,
+                      password = password,
+                      cursorclass = pymysql.cursors.DictCursor
+    )
+
+    cursor = db.cursor()
+    cursor.connection.commit()
+
+    use_db = ''' USE DB_negocios'''
+    cursor.execute(use_db)
+
+    query = '''SELECT * FROM negocios'''
+    data = sql_query(query, cursor)
+
+    db.close()
+
+    return data
+
+
 def sql_query(query,cursor):
-
-    # Ejecuta la query
     cursor.execute(query)
-
-    # Almacena los datos de la query 
     ans = cursor.fetchall()
-
-    # Obtenemos los nombres de las columnas de la tabla
     names = [description[0] for description in cursor.description]
 
     return pd.DataFrame(ans,columns=names)
