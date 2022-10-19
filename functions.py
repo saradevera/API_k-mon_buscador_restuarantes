@@ -39,7 +39,7 @@ def sql_query(query,cursor):
 
 
 def info_from_type(data):
-# EXTRAEMOS INFO DE LA COLUMNA TYPE
+    # EXTRAEMOS INFO DE LA COLUMNA TYPE
     data['vegano 1'] = np.where(data['type'].str.contains('egan'), 1, 0)
     data['vegetariano 1'] = np.where(data['type'].str.contains('egeta'), 1, 0)
     data['orgánico 1'] = np.where(data['type'].str.contains('rgáni'), 1, 0)
@@ -75,76 +75,71 @@ def info_from_description(data):
 
 def new_columns(data):
 # UNIFICAMOS COLUMNAS SEGÚN TEMÁTICA
-    data['vegan'] = data['vegana'] + data['crudiveganismo'] + data['crueldad'] + data['heura'] + data['leche vegetal'] 
-    data.drop(columns=['vegana', 'crudiveganismo', 'crueldad', 'heura', 'leche vegetal'], inplace=True)
 
-    data['vegetarian'] = data['vegan'] + data['vegetales']
-    data.drop(columns = ['vegan', 'vegetales'])
+    data['vegan'] = data['veganas'] + data['vegano'] + data['crudiveganismo'] + data['crueldad'] + data['heura'] + data['hamburguesa_vegana']
+    data.drop(columns=['veganas', 'vegano', 'crudiveganismo', 'crueldad', 'heura'], inplace=True)
 
-    data['healthy'] = data['alimentación sana'] + data['comer sano'] + data['comida saludable'] + data['comida sana'] + data['salud'] + data['sano'] + data['slow food'] + data[ 'smoothies'] + data['integral']  + data['saludable 2']
-    data.drop(columns=['alimentación sana', 'comer sano', 'comida saludable',
-                    'comida sana', 'salud', 'sano', 'slow food', 'smoothies', 'integral'], inplace=True)
+    data['vegetarian'] = data['vegan'] + data['vegetarianos'] + data['vegetales']
+    data.drop(columns = ["vegetarianos", 'vegetales'], inplace=True)
 
-    data['seasonal'] = data['temporada'] + data['productos frescos'] + data['huerto'] + data['granja'] + data['verdura fresca']
-    data.drop(columns=['temporada', 'productos frescos', 'huerto', 'granja', 'verdura fresca'], inplace=True)
+    data['healthy'] =  data['salud'] + data['sano']  + data[ 'smoothies'] + data['integral']  + data['saludable'] + data['saludable 2']
+    data.drop(columns=[ 'salud', 'sano', 'smoothies', 'integral'], inplace=True)
 
-    data['sustainable'] = + data['eficiente'] + data['justa'] +  data['cooperativa'] + data['ética'] + data['agricultores'] + data['planeta'] + data['respetuoso con el medio ambiente'] 
-    data.drop(columns=['eficiente', 'justa', 'cooperativa', 'ética', 'agricultores', 'planeta', 'respetuoso con el medio ambiente'], inplace=True)
+    data['seasonal'] = data['temporada'] + data['huerto'] + data['granja']
+    data.drop(columns=['temporada', 'huerto', 'granja'], inplace=True)
 
-    data['handcrafted'] = data['artesanal']  + data['cervezas artesanas'] + data['tradicional'] + data['tradición']
+    data['sustainable'] = + data['eficiente'] + data['justa'] +  data['cooperativa'] + data['ética'] + data['agricultores'] 
+    data.drop(columns=['eficiente', 'justa', 'cooperativa', 'ética', 'agricultores'], inplace=True)
+
+    data['handcrafted'] = data['artesanal'] + data['tradicional'] + data['tradición']
     data.drop(columns=['artesanal', 'tradicional', 'tradición'], inplace=True)
 
-    data['organic'] = data['productos orgánicos'] 
-    data.drop(columns=['productos orgánicos'], inplace=True)
+    data['organic'] = data['orgánico'] 
+    data.drop(columns=['orgánico'], inplace=True)
 
-    data['zero_waste'] = data['cero basura'] + data['reciclados'] + data['reciclaje'] + data['reciclar'] + data['a granel'] + data['biodegradables'] + data['too good to go']
-    data.drop(columns=['cero basura','reciclados','reciclaje','reciclar', 'a granel', 'biodegradables', 'too good to go'], inplace=True)
+    data['zero_waste'] =  data['reciclados'] + data['reciclaje'] + data['reciclar'] + data['biodegradables'] 
+    data.drop(columns=['reciclados','reciclaje','reciclar', 'biodegradables'], inplace=True)
 
-    data['alergens'] = data['alérgenos'] + data['gluten'] + data['sin gluten'] + data['pan sin gluten'] + data['lactosa'] + data['celíacos']
-    data.drop(columns=['alérgenos', 'gluten', 'sin gluten', 'lactosa', 'celíacos'], inplace=True)
+    data['alergens'] = data['alérgenos'] + data['gluten']  + data['lactosa'] + data['celíacos']
+    data.drop(columns=['alérgenos', 'gluten',  'lactosa', 'celíacos'], inplace=True)
 
-    data['wine'] = data['vino'] + data['vinos naturales'] + data['maridaje'] + data['tinto de verano'] 
-    data.drop(columns=['vino', 'vinos naturales', 'maridaje', 'tinto de verano'], inplace=True)
+    data['wine'] = data['vino'] + data['maridaje'] + data['cavas']
+    data.drop(columns=['vino', 'maridaje', 'cavas'], inplace=True)
 
-    data['bread'] = data['pan sin gluten'] + data['obrador'] + data['palmera'] + data['palmeritas'] + data['bollería'] + data['horno'] + data['masa'] + data['masa madre']
-    data.drop(columns=['pan sin gluten','obrador','palmera', 'palmeritas', 'bollería', 'horno', 'masa', 'masa madre'], inplace=True)
+    data['bread'] = data['obrador'] + data['palmera'] + data['palmeritas'] + data['bollería'] + data['horno'] + data['masa']
+    data.drop(columns=['obrador','palmera', 'palmeritas', 'bollería', 'horno', 'masa'], inplace=True)
 
-    data['coffee'] = data['cafetería'] + data['café'] + data['café con leche'] + data['flat white']
-    data.drop(columns=['cafetería', 'café', 'café con leche', 'flat white'], inplace=True)
+    data['coffee'] = data['cafetería'] + data['café'] 
+    data.drop(columns=['cafetería', 'café'], inplace=True)
 
-    data['drinks'] = data['bar'] + data['barman'] + data['cervezas'] + data['cervezas artesanas'] + data['cócteles'] + data['estrella galicia'] + data['chupito'] + data['mojitos'] + data['queimada'] + data['sangria'] + data['vermut'] + data['margaritas'] + data['wine']
-    data.drop(columns=['bar', 'barman','cervezas', 'cervezas artesanas','cócteles', 'estrella galicia', 'chupito', 'mojitos', 'queimada', 'sangria', 'vermut', 'margaritas'], inplace=True)
+    data['drinks'] = data['bar'] + data['barman'] + data['cerveza']  + data['cócteles'] + data['chupito'] + data['mojitos'] + data['queimada']  + data['vermut'] + data['margaritas'] + data['wine']
+    data.drop(columns=['bar', 'barman','cerveza', 'cócteles',  'chupito', 'mojitos', 'queimada',  'vermut', 'margaritas'], inplace=True)
 
-    data['meat'] = data['angus'] + data['buey'] + data['butifarra'] + data['cachopo'] + data['carne'] + data['carne de oveja'] + data['carne de oveja'] + data['carrilleras'] + data['cecina'] + data['cerdo'] + data['chuleta'] + data['chuletón'] + data['chuletón de ávila'] + data['churrasco'] + data['codillo'] + data['cordero'] + data['costillas'] + data['costillas de cerdo'] + data['embutidos'] + data['entrecot'] + data['hot dog'] + data['lechazo'] + data['matadero'] + data['matanza'] + data['mollejas'] + data['morcilla'] + data['oreja'] + data['rabo de toro'] + data['sobrasada'] + data['solomillo'] + data['steak tartar'] + data['t-bone']
-    data.drop(columns=['angus', 'buey', 'butifarra', 'cachopo', 'carne', 'carne de oveja', 'carne de oveja', 'carrilleras', 'cecina', 'cerdo', 
-                    'chuleta', 'chuletón', 'chuletón de ávila', 'churrasco', 'codillo', 'cordero', 'costillas', 'costillas de cerdo', 'embutidos', 
-                    'entrecot', 'hot dog', 'lechazo', 'matadero', 'matanza', 'mollejas', 'morcilla', 'oreja', 'rabo de toro', 'sobrasada', 'solomillo',
-                    't-bone'] , inplace=True)
+    data['meat'] = data['angus'] + data['buey'] + data['butifarra'] + data['cachopo'] + data['carne'] + data['carrilleras'] + data['cecina'] + data['cerdo'] + data['chuleta'] + data['chuletón'] + data['churrasco'] + data['codillo'] + data['cordero'] + data['costillas'] + data['embutidos'] + data['entrecot'] +  data['lechazo'] + data['matadero'] + data['matanza'] + data['mollejas'] + data['morcilla'] + data['oreja']  + data['sobrasada'] + data['solomillo'] + data['t-bone']
+    data.drop(columns=['angus', 'buey', 'butifarra', 'cachopo', 'carne', 'carrilleras', 'cecina', 'cerdo', 
+                'chuleta', 'chuletón',  'churrasco', 'codillo', 'cordero', 'costillas', 'embutidos', 
+                'entrecot',  'lechazo', 'matadero', 'matanza', 'mollejas', 'morcilla', 'oreja', 'sobrasada', 'solomillo',
+                't-bone'] , inplace=True)
 
-    data['fish'] = data['atún'] + data['atún rojo'] + data['bacalao'] + data['lubina'] + data['mar'] + data['pescadería'] + data['pescado'] + data['sashimi'] + data['trucha']
-    data.drop(columns= ['atún', 'atún rojo','bacalao', 'lubina', 'trucha' ], inplace=True)
+    data['fish'] = data['atún']  + data['bacalao'] + data['lubina'] + data['mar'] + data['pescadería'] + data['pescado'] + data['sashimi'] + data['trucha']
+    data.drop(columns= ['atún','bacalao', 'lubina', 'trucha' ], inplace=True)
 
     data['seafood'] = data['cangrejo'] + data['calamares'] + data['camarón'] + data['chipirones'] + data['langostinos'] + data['marisco'] + data['mar'] + data['rabas'] + data['zamburiñas']
     data.drop(columns= ['cangrejo', 'calamares','camarón', 'chipirones', 'langostinos', 'marisco', 'rabas', 'zamburiñas' ], inplace=True)
 
-    data['chicken'] = data['pollo'] + data['pollo a la brasa'] + data['pollo al ast'] + data['pollo asado']
-    data.drop(columns= ['pollo', 'pollo a la brasa', 'pollo al ast', 'pollo asado'], inplace=True)
-
-    return data
-
 
 def columnas_sumatorio(data):
 # CREAMOS LAS COLUMNAS DE SUMATORIOS
-    data['TOTAL_vegano'] = data['vegan'] + data['vegano 1'] 
-    data['TOTAL_vegetariano'] =  data['vegetarian'] + data['vegetariano 1']
+    data['TOTAL_vegano'] = data['vegan'] + data['vegano 1'] + data['vegano 2']
+    data['TOTAL_vegetariano'] =  data['vegetarian'] + data['vegetariano 1'] + data['TOTAL_vegano']
     data['TOTAL_sostenible'] = data['sustainable'] + data['sostenible 2']
-    data['TOTAL_de_temporada'] = data['seasonal'] 
-    data['TOTAL_orgánico'] = data['organic']
-    data['TOTAL_saludable'] = data['healthy']+ data['saludable 2']
-    data['TOTAL_fresco'] = data['seasonal'] + data['frescos 1'] + data['huerta 2']
+    data['TOTAL_de_temporada'] = data['seasonal'] + data['frescos 1'] + data['frescos 2'] + data['huerta 1'] + data['huerta 2'] 
+    data['TOTAL_orgánico'] = data['organic'] + data['orgánico 1'] + data['orgánico 2']
+    data['TOTAL_saludable'] = data['healthy'] + data['saludable 2']
+    data['TOTAL_fresco'] = data['seasonal'] + data['TOTAL_de_temporada']
     data['TOTAL_artesano'] = data['handcrafted'] + data['artesano 2']
     data['TOTAL_cero_basura'] = data['zero_waste'] 
-    data['TOTAL_de_proximidad'] =  data['proximidad 2']
+    data['TOTAL_de_proximidad'] =  data['proximidad 2']  + data['local 2'] + data['TOTAL_fresco'] 
 
     return data
 

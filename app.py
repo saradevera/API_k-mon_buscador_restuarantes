@@ -72,11 +72,11 @@ def RecomendacionDependiente():
     # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
     data = conn_db()
 
-    # info_from_type(data)
-    # info_from_description(data)
-    # new_columns(data)
-    # columnas_sumatorio(data)
-    # columnas_scoring(data)
+    info_from_type(data)
+    info_from_description(data)
+    new_columns(data)
+    columnas_sumatorio(data)
+    columnas_scoring(data)
 
     ID = int(request.args.get("ID"))
 
