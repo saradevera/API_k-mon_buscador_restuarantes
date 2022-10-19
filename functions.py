@@ -8,7 +8,6 @@ def conn_db():
     username = "admin"
     password = "12345678"
     host = "database-1.cjhgutfjw0tz.us-east-1.rds.amazonaws.com"
-    port = 3306
 
     db = pymysql.connect(host = host,
                       user = username,
@@ -17,26 +16,16 @@ def conn_db():
     )
 
     cursor = db.cursor()
-    cursor.connection.commit()
 
     use_db = ''' USE DB_negocios'''
     cursor.execute(use_db)
 
-    query = '''SELECT * FROM negocios'''
-    data = sql_query(query, cursor)
+    cursor.execute("select * from negocios")
+    data = pd.DataFrame(cursor.fetchall())
 
     db.close()
 
     return data
-
-
-def sql_query(query,cursor):
-    cursor.execute(query)
-    ans = cursor.fetchall()
-    names = [description[0] for description in cursor.description]
-
-    return pd.DataFrame(ans,columns=names)
-
 
 def info_from_type(data):
     # EXTRAEMOS INFO DE LA COLUMNA TYPE
@@ -170,3 +159,22 @@ def get_recommendations(place_name, index, data, cosine_sim):
     recomendacion = data['place_name'].iloc[place_index]
     
     return recomendacion
+
+def preferencias(ListNum, data):
+    cols = ["TOTAL_vegano", "TOTAL_vegetariano", "TOTAL_sostenible", "TOTAL_de_temporada", "TOTAL_orgánico", "TOTAL_saludable", "TOTAL_fresco", "TOTAL_artesano", "TOTAL_cero_basura", "TOTAL_de_proximidad"]
+    cercanos = []
+    for columna in cols:
+        diferencia = data[columna].max() - data[columna].min()
+        cercanos.append([])
+        indice = cols.index(columna)
+        num = ListNum[indice]
+        for registro in data[columna]:
+            cercanos[indice].append(np.abs(((num*2-1)*0.1)-((registro-data[columna].min()) / diferencia)))
+    indices = []
+    media = []
+    for index in data.index:
+        suma_previa = []
+        for campo in cercanos:
+            suma_previa.append(campo[index])
+        media.append((index, np.sum(suma_previa)))
+    return [x[0] for x in sorted(media, key= lambda x:x[1])[:10]]
