@@ -116,6 +116,7 @@ def new_columns(data):
     data['seafood'] = data['cangrejo'] + data['calamares'] + data['camarón'] + data['chipirones'] + data['langostinos'] + data['marisco'] + data['mar'] + data['rabas'] + data['zamburiñas']
     data.drop(columns= ['cangrejo', 'calamares','camarón', 'chipirones', 'langostinos', 'marisco', 'rabas', 'zamburiñas' ], inplace=True)
 
+    return data
 
 def columnas_sumatorio(data):
 # CREAMOS LAS COLUMNAS DE SUMATORIOS
@@ -153,7 +154,7 @@ def get_recommendations(data, ID):
     CosineSim = linear_kernel([data[ID]], data)
     SortCoSim = sorted(list(enumerate(CosineSim[0])), key = lambda x: x[1], reverse = True)
     Recomendacion = [x[0] for x in SortCoSim]
-    return Recomendacion[:10]
+    return Recomendacion[1:11]
 
 def preferencias(ListNum, data):
     cols = ["TOTAL_vegano", "TOTAL_vegetariano", "TOTAL_sostenible", "TOTAL_de_temporada", "TOTAL_orgánico", "TOTAL_saludable", "TOTAL_fresco", "TOTAL_artesano", "TOTAL_cero_basura", "TOTAL_de_proximidad"]
