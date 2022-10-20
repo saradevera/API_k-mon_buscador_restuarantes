@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import pymysql
 from functions import *
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import linear_kernel
 
