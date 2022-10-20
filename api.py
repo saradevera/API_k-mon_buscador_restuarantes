@@ -13,7 +13,7 @@ from sklearn.metrics.pairwise import linear_kernel
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-CORS(app, resources={r"/cursos/*": {"origins": "http://localhost/%22%7D%7D"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/", methods=['GET'])
 def hello():
