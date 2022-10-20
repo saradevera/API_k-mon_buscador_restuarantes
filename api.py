@@ -20,14 +20,12 @@ CORS(app)
 
 
 @app.route("/", methods=['GET'])
-# @cross_origin
 def hello():
     return render_template('hola.html')
 
 
-# @cross_origin
+
 @app.route("/RecomendacionPorPreferencias", methods = ['POST'])
-# @cross_origin
 def RecomendacionPorPreferencias():
   pref = request.get_json()["preferencias"]
   filtro = request.args.get("Filtro")
@@ -51,9 +49,9 @@ def RecomendacionPorPreferencias():
   return str(recomendacionesDef)[1:-1]
 
 
-# @cross_origin
+
 @app.route("/RecomendacionDependiente", methods = ['GET'])
-# @cross_origin
+
 def RecomendacionDependiente():
   filtro = request.args.get("Filtro")
   ID = int(request.args.get("ID"))
