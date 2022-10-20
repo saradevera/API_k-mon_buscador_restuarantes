@@ -18,7 +18,7 @@ def hello():
     return render_template('hola.html')
 
 
-@app.route("/RecomendacionPorPreferencias", methods = ['GET'])
+@app.route("/RecomendacionPorPreferencias", methods = ['POST'])
 def RecomendacionPorPreferencias():
   pref = request.get_json()["preferencias"]
   filtro = request.args.get("Filtro")
