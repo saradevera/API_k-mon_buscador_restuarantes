@@ -28,7 +28,6 @@ def RecomendacionPorPreferencias():
   data = info_from_description(data)
   data = new_columns(data)
   data = columnas_sumatorio(data)
-  data = columnas_scoring(data)
   # RECIBIMOS LA INFO DE LA API DE NUESTRA WEB
   recomendaciones = preferencias(pref, data)
 
@@ -44,7 +43,6 @@ def RecomendacionDependiente():
   data = info_from_description(data)
   data = new_columns(data)
   data = columnas_sumatorio(data)
-  data = columnas_scoring(data)
 
   ID = int(request.args.get("ID"))
 
