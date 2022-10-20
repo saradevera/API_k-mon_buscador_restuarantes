@@ -156,5 +156,5 @@ def preferencias(ListNum, data):
         suma_previa = []
         for campo in cercanos:
             suma_previa.append(campo[index])
-        media.append((data.index[index], np.sum(suma_previa)))
+        media.append((data.index[index], int(np.sum(suma_previa))))
     return [x[0] for x in sorted(media, key= lambda x:x[1])[:10]]
