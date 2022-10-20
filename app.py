@@ -21,6 +21,7 @@ def hello():
 @app.route("/RecomendacionPorPreferencias", methods = ['GET'])
 def RecomendacionPorPreferencias():
   pref = request.get_json()["preferencias"]
+  filtro = int(request.args.get("Filtro"))
   # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
   data = conn_db()
 
@@ -28,6 +29,13 @@ def RecomendacionPorPreferencias():
   data = info_from_description(data)
   data = new_columns(data)
   data = columnas_sumatorio(data)
+
+  if filtro == "restaurantes":
+    data = data[data["resotie"] == "Restaurante"]
+  elif filtro == "tiendas":
+    data = data[data["resotie"] == "Tienda"]
+  elif filtro == "todos":
+    pass
   # RECIBIMOS LA INFO DE LA API DE NUESTRA WEB
   recomendaciones = preferencias(pref, data)
 
@@ -35,7 +43,8 @@ def RecomendacionPorPreferencias():
 
 @app.route("/RecomendacionDependiente", methods = ['GET'])
 def RecomendacionDependiente():
-
+  filtro = int(request.args.get("Filtro"))
+  ID = int(request.args.get("ID"))
     # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
   data = conn_db()
 
@@ -43,9 +52,12 @@ def RecomendacionDependiente():
   data = info_from_description(data)
   data = new_columns(data)
   data = columnas_sumatorio(data)
-
-  ID = int(request.args.get("ID"))
-
+  if filtro == "restaurantes":
+    data = data[data["resotie"] == "Restaurante"]
+  elif filtro == "tiendas":
+    data = data[data["resotie"] == "Tienda"]
+  elif filtro == "todos":
+    pass
   # ELIMINAMOS LAS COLUMNAS QUE NO SON NECESARIAS EN ESTA FASE
   data.drop(columns=['place_name', 'type', 'resotie',
                               'place_id', 'address', 'phone',
