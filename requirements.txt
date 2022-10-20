@@ -24,4 +24,3 @@ zipp==3.9.0
 gunicorn
 pymysql
 Flask-Cors==3.0.10
-fastapi

@@ -8,57 +8,26 @@ from functions import *
 from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import linear_kernel
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 # os.chdir(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-# CORS(app)
+CORS(app)
 # CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-
-
-app = FastAPI()
-
-origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
-    "http://localhost",
-    "http://localhost:8080",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-
-# @app.after_request
-# def after_request(response):
-#     response.headers["Access-Control-Allow-Origin"] = "*" # <- You can change "*" for a domain for example "http://localhost"
-#     response.headers["Access-Control-Allow-Credentials"] = "true"
-#     response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE"
-#     response.headers["Access-Control-Allow-Headers"] = "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization"
-#     return response
-
-
-
-@app.route("/", methods=['GET'])
 @cross_origin
+@app.route("/", methods=['GET'])
+# @cross_origin
 def hello():
     return render_template('hola.html')
 
 
-@app.route("/RecomendacionPorPreferencias", methods = ['POST'])
 @cross_origin
+@app.route("/RecomendacionPorPreferencias", methods = ['POST'])
+# @cross_origin
 def RecomendacionPorPreferencias():
   pref = request.get_json()["preferencias"]
   filtro = request.args.get("Filtro")
@@ -82,9 +51,9 @@ def RecomendacionPorPreferencias():
   return str(recomendacionesDef)[1:-1]
 
 
-# @cross_origin
-@app.route("/RecomendacionDependiente", methods = ['GET'])
 @cross_origin
+@app.route("/RecomendacionDependiente", methods = ['GET'])
+# @cross_origin
 def RecomendacionDependiente():
   filtro = request.args.get("Filtro")
   ID = int(request.args.get("ID"))
