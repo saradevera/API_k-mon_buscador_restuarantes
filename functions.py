@@ -157,7 +157,7 @@ def get_recommendations(data, ID):
     return Recomendacion[1:11]
 
 def preferencias(ListNum, data):
-    cols = ["TOTAL_vegano", "TOTAL_vegetariano", "TOTAL_sostenible", "TOTAL_de_temporada", "TOTAL_orgánico", "TOTAL_saludable", "TOTAL_fresco", "TOTAL_artesano", "TOTAL_cero_basura", "TOTAL_de_proximidad"]
+    cols = ["TOTAL_de_temporada", "TOTAL_fresco", "TOTAL_orgánico", "TOTAL_saludable", "TOTAL_sostenible", "TOTAL_cero_basura", "TOTAL_de_proximidad", "TOTAL_vegano", "TOTAL_vegetariano", "TOTAL_artesano"]
     cercanos = []
     for columna in cols:
         diferencia = data[columna].max() - data[columna].min()
