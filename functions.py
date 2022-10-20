@@ -133,23 +133,6 @@ def columnas_sumatorio(data):
 
     return data
 
-
-def columnas_scoring(data):
-# CREAMOS LAS COLUMNAS DE SCORING, QUE SE RELACIONARÁN CON LAS PREFERENCIAS DE USUARIO
-    data['SCORE_vegano'] = pd.cut(data['TOTAL_vegano'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_vegetariano'] = pd.cut(data['TOTAL_vegetariano'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_sostenible'] = pd.cut(data['TOTAL_sostenible'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_de_temporada'] = pd.cut(data['TOTAL_de_temporada'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_orgánico'] = pd.cut(data['TOTAL_orgánico'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_saludable'] = pd.cut(data['TOTAL_saludable'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_fresco'] = pd.cut(data['TOTAL_fresco'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_artesano'] = pd.cut(data['TOTAL_artesano'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_cero_basura'] = pd.cut(data['TOTAL_cero_basura'], bins=7, labels=[0,1,2,3,4,5,6])
-    data['SCORE_de_proximidad'] = pd.cut(data['TOTAL_de_proximidad'], bins=7, labels=[0,1,2,3,4,5,6])
-
-    return data
-
-
 def get_recommendations(data, ID):
     CosineSim = linear_kernel([data[ID]], data)
     SortCoSim = sorted(list(enumerate(CosineSim[0])), key = lambda x: x[1], reverse = True)
@@ -169,9 +152,9 @@ def preferencias(ListNum, data):
             cercanos[indice].append(np.abs(((num*2-1)*0.1)-((registro-data[columna].min()) / diferencia)))
     indices = []
     media = []
-    for index in data.index:
+    for index in range(len(data.index)):
         suma_previa = []
         for campo in cercanos:
             suma_previa.append(campo[index])
-        media.append((index, np.sum(suma_previa)))
+        media.append((data.index[index], np.sum(suma_previa)))
     return [x[0] for x in sorted(media, key= lambda x:x[1])[:10]]
