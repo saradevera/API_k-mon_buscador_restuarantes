@@ -155,9 +155,10 @@ def get_recommendations(data, ID):
     SortCoSim = sorted(list(enumerate(CosineSim[0])), key = lambda x: x[1], reverse = True)
     Recomendacion = [x[0] for x in SortCoSim]
     return Recomendacion[1:11]
+# artesanal,basura0,km0,organico,productosfrescos,productostemporada,saludable,sostenible,vegano,vegetariano
 
 def preferencias(ListNum, data):
-    cols = ["TOTAL_de_temporada", "TOTAL_fresco", "TOTAL_orgánico", "TOTAL_saludable", "TOTAL_sostenible", "TOTAL_cero_basura", "TOTAL_de_proximidad", "TOTAL_vegano", "TOTAL_vegetariano", "TOTAL_artesano"]
+    cols = ["TOTAL_artesano", "TOTAL_cero_basura", "TOTAL_de_proximidad", "TOTAL_orgánico", "TOTAL_fresco", "TOTAL_de_temporada", "TOTAL_saludable", "TOTAL_sostenible", "TOTAL_vegano", "TOTAL_vegetariano"]
     cercanos = []
     for columna in cols:
         diferencia = data[columna].max() - data[columna].min()
