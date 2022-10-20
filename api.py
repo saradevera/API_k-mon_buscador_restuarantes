@@ -25,7 +25,7 @@ def hello():
     return render_template('hola.html')
 
 
-@cross_origin
+# @cross_origin
 @app.route("/RecomendacionPorPreferencias", methods = ['POST'])
 # @cross_origin
 def RecomendacionPorPreferencias():
@@ -51,7 +51,7 @@ def RecomendacionPorPreferencias():
   return str(recomendacionesDef)[1:-1]
 
 
-@cross_origin
+# @cross_origin
 @app.route("/RecomendacionDependiente", methods = ['GET'])
 # @cross_origin
 def RecomendacionDependiente():
