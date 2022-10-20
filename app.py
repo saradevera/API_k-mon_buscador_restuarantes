@@ -21,7 +21,7 @@ def hello():
 @app.route("/RecomendacionPorPreferencias", methods = ['GET'])
 def RecomendacionPorPreferencias():
   pref = request.get_json()["preferencias"]
-  filtro = int(request.args.get("Filtro"))
+  filtro = request.args.get("Filtro")
   # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
   data = conn_db()
 
@@ -43,7 +43,7 @@ def RecomendacionPorPreferencias():
 
 @app.route("/RecomendacionDependiente", methods = ['GET'])
 def RecomendacionDependiente():
-  filtro = int(request.args.get("Filtro"))
+  filtro = request.args.get("Filtro")
   ID = int(request.args.get("ID"))
     # NOS CONECTAMOS A LA DB PARA OBTENER LA TABLA DE DATOS
   data = conn_db()
@@ -59,18 +59,21 @@ def RecomendacionDependiente():
   elif filtro == "todos":
     pass
   # ELIMINAMOS LAS COLUMNAS QUE NO SON NECESARIAS EN ESTA FASE
+  index = [x for x in data["index"]]
+  indice_matriz = index.index(ID)
   data.drop(columns=['place_name', 'type', 'resotie',
                               'place_id', 'address', 'phone',
                               'website', 'description', 'photos_link',
                               'thumbnail', 'is_spain', 'keywords', 'localidad', "index"], inplace = True)
-
+  
   # ESCALAMOS LOS DATOS Y CREAMOS LA MATRIZ
   ss = StandardScaler()
   data_scalado = ss.fit_transform(data)
   # CREAMOS EL COMPARATIVO DE DATOS Y EL INDICE QUE SE CONSULTARÁ
   # GENERAMOS LA SIMILITUD COSENO Y SE ORDENA SEGÚN PARECIDOS
-  recomendaciones = get_recommendations(data_scalado, ID)
+  recomendaciones = get_recommendations(data_scalado, indice_matriz)
   return recomendaciones
+  # return "hola"
     # return str(recomendacion)
 
 
