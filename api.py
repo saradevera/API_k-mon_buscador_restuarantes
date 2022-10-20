@@ -13,8 +13,11 @@ from sklearn.metrics.pairwise import linear_kernel
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-CORS(app, resources={r"/*": {"origins": "*"}})
 
+CORS(app)
+# CORS(app, resources={r"/*": {"origins": "*"}})
+
+@cross_origin
 @app.route("/", methods=['GET'])
 def hello():
     return render_template('hola.html')
@@ -43,6 +46,8 @@ def RecomendacionPorPreferencias():
   recomendacionesDef= [int(x) for x in recomendaciones]
   return str(recomendacionesDef)[1:-1]
 
+
+@cross_origin
 @app.route("/RecomendacionDependiente", methods = ['GET'])
 def RecomendacionDependiente():
   filtro = request.args.get("Filtro")
