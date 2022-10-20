@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import pymysql
 from functions import *
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import linear_kernel
 
@@ -14,10 +14,19 @@ from sklearn.metrics.pairwise import linear_kernel
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-CORS(app)
+# CORS(app)
 # CORS(app, resources={r"/*": {"origins": "*"}})
 
-@cross_origin
+@app.after_request
+def after_request(response):
+    response.headers["Access-Control-Allow-Origin"] = "*" # <- You can change "*" for a domain for example "http://localhost"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE"
+    response.headers["Access-Control-Allow-Headers"] = "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization"
+    return response
+
+
+# @cross_origin
 @app.route("/", methods=['GET'])
 def hello():
     return render_template('hola.html')
@@ -47,7 +56,7 @@ def RecomendacionPorPreferencias():
   return str(recomendacionesDef)[1:-1]
 
 
-@cross_origin
+# @cross_origin
 @app.route("/RecomendacionDependiente", methods = ['GET'])
 def RecomendacionDependiente():
   filtro = request.args.get("Filtro")
