@@ -8,14 +8,37 @@ from functions import *
 from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import linear_kernel
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # os.chdir(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-CORS(app)
+# CORS(app)
 # CORS(app, resources={r"/*": {"origins": "*"}})
+
+
+
+
+app = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 # @app.after_request
