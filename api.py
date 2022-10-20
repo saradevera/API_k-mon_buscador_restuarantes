@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 
-CORS(app)
+# CORS(app)
 # CORS(app, resources={r"/*": {"origins": "*"}})
 
 
